@@ -4,7 +4,18 @@ var app = new Vue({
         product: "Donuts",
         image: "./assets/51UDInCwZxL._SL500_.jpg",
         onSale: false,
-        inStock: false,
-        inventory: 0
+        inStock: true,
+        inventory: 0,
+        details: ["80% cotton", "20% polyester", "Gender-neutral"],
+        variants: [
+            {
+                variantId: 1,
+                variantColor: "chocolate"
+            },
+            {
+                variantId: 2,
+                variantColor: "pink"
+            }
+        ]
     }
 })
