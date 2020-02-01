@@ -10,12 +10,26 @@ var app = new Vue({
         variants: [
             {
                 variantId: 1,
-                variantColor: "chocolate"
+                variantColor: "chocolate",
+                variantImage: "./assets/51UDInCwZxL._SL500_.jpg"
             },
             {
                 variantId: 2,
-                variantColor: "pink"
+                variantColor: "pink",
+                variantImage: "./assets/reward-doughnut.png"
             }
-        ]
+        ],
+        cart: 0
+    },
+    methods: {
+        addToCart() {
+            this.cart += 1
+        },
+        updateProduct(variantImage) {
+            this.image = variantImage
+        },
+        addToCart2() {
+            this.cart += 1
+        }
     }
 })
