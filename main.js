@@ -1,3 +1,7 @@
+Vue.component('product', {
+    template: '<div><p>sdafsf</p></div>'
+});
+
 var app = new Vue({
     el: "#app",
     data: {
