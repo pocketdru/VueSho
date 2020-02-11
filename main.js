@@ -1,3 +1,15 @@
+Vue.component("productDetails", {
+    props: {
+        donutType: {
+            required: true,
+            filled: Boolean
+        }
+    },
+    template: `
+        <p>{{ donutType }}</p>
+    `
+})
+
 Vue.component('product', {
     props: {
         premium: {
@@ -16,6 +28,7 @@ Vue.component('product', {
         <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
         <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
         <p>Shipping: {{ shipping }}</p>
+        <productDetails :donutType="donutType"></productDetails>
         <span><i v-if="onSale">{{ sale }}</i></span>
         <ul>
             <li v-for="detail in details"> {{ detail }}</li>
@@ -91,13 +104,20 @@ Vue.component('product', {
                     return "Free"
                 }
                     return "2.99"
-            } 
+            },
+            filled() {
+                if(this.filled) {
+                    return "Filled with rusberry jam"
+                }
+                    return "Without filling."
+            }
     }   
 })
 
 var app = new Vue({
     el: "#app",
     data: {
-        premium: false
+        premium: false,
+        donutType: true
     }
 })
