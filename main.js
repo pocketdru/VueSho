@@ -1,3 +1,6 @@
+Vue.config.devtools = true
+
+
 Vue.component("productDetails", {
 
     props: {
@@ -12,17 +15,7 @@ Vue.component("productDetails", {
             <li v-for="detail in details"> {{ detail }}</li>
         </ul>
     </div>
-`,
-    computed: {
-        filling() {
-            if(this.donutType) {
-                console.log("kva")
-                return "Filled with rusberry jam"
-            }
-            console.log("kva1")
-                return "Without filling."
-        }
-    }
+`
 
 })
 
@@ -56,9 +49,6 @@ Vue.component('product', {
         <button @click="addToCart" 
         :disabled="!inStock"
         :class="{ disabledButton: !inStock}">Add to cart</button>
-        <div class="cart">
-            <p>Cart ({{cart}})</p>
-        </div>
         </div>    
     </div>
     `,
@@ -88,7 +78,7 @@ Vue.component('product', {
     }},
         methods: {
             addToCart() {
-                this.cart += 1
+                this.$emit("add-to-cart", this.variants[this.selectedVariant].variantId)
             },
             updateProduct(index) {
                 this.selectedVariant = index,
@@ -124,6 +114,11 @@ var app = new Vue({
     el: "#app",
     data: {
         premium: false,
-        donutType: true
+        cart: []
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id)
+        }
     }
 })
