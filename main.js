@@ -1,13 +1,29 @@
 Vue.component("productDetails", {
+
     props: {
-        donutType: {
-            required: true,
-            filled: Boolean
+        details: {
+            type: Array,
+            required: true
         }
     },
     template: `
-        <p>{{ donutType }}</p>
-    `
+    <div class="product-details">
+        <ul>
+            <li v-for="detail in details"> {{ detail }}</li>
+        </ul>
+    </div>
+`,
+    computed: {
+        filling() {
+            if(this.donutType) {
+                console.log("kva")
+                return "Filled with rusberry jam"
+            }
+            console.log("kva1")
+                return "Without filling."
+        }
+    }
+
 })
 
 Vue.component('product', {
@@ -28,12 +44,8 @@ Vue.component('product', {
         <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
         <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
         <p>Shipping: {{ shipping }}</p>
-        <productDetails :donutType="donutType"></productDetails>
+        <productDetails :details="details"></productDetails>
         <span><i v-if="onSale">{{ sale }}</i></span>
-        <ul>
-            <li v-for="detail in details"> {{ detail }}</li>
-        </ul>
-        
         <div v-for="(variant, index) in variants"
              :key="variant.variantId"
              class="color-box"
@@ -57,7 +69,7 @@ Vue.component('product', {
         selectedVariant: 0,
         onSale: true,
         inventory: 0,
-        details: ["80% cotton", "20% polyester", "Gender-neutral"],
+        details: ["80% love", "20% fat", "Gender-neutral"],
         variants: [
             {
                 variantId: 1,
@@ -104,12 +116,6 @@ Vue.component('product', {
                     return "Free"
                 }
                     return "2.99"
-            },
-            filled() {
-                if(this.filled) {
-                    return "Filled with rusberry jam"
-                }
-                    return "Without filling."
             }
     }   
 })
