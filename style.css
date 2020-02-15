@@ -77,3 +77,13 @@ body {
   .outOfStock {
     text-decoration: line-through;
   }
+  
+  .tabs {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+
+  .activeTab {
+    color: #16C0B0;
+    text-decoration: underline;
+  }
