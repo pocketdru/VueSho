@@ -1,6 +1,6 @@
 Vue.config.devtools = true
 
-var eventBus = Vue()
+var eventBus = new Vue()
 
 Vue.component("productDetails", {
 
@@ -38,9 +38,8 @@ Vue.component('product', {
             <p v-if="inStock">In Stock</p>
             <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
             <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
-            <p>Shipping: {{ shipping }}</p>
-            <productDetails :details="details"></productDetails>
             <span><i v-if="onSale">{{ sale }}</i></span>
+            <info-tabs :shipping="shipping" :details="details"></info-tabs>
             <div v-for="(variant, index) in variants"
                 :key="variant.variantId"
                 class="color-box"
@@ -205,6 +204,39 @@ Vue.component("product-review", {
     }
 })
 
+Vue.component("info-tabs", {
+    props: {
+        shipping: {
+            required: true
+        },
+        details: {
+            required: true,
+            type: Array
+        }
+    },
+    template: 
+        `
+        <div>
+            <span class="tab"
+            :class="{ activeTab: selectedTab === tab}"
+            v-for="(tab, index) in tabs" :key="index"
+            @click="selectedTab = tab">
+                {{ tab }}
+            </span>
+            <p v-show="selectedTab === 'Shipping'">Shipping: {{ shipping }}</p>
+            <productDetails :details="details" v-show="selectedTab === 'Details'"></productDetails>
+
+
+        </div>
+        `,
+        data() {
+            return {
+                tabs: ["Shipping", "Details"],
+                selectedTab: "Shipping"
+            }
+        }
+})
+
 Vue.component("product-tabs", {
     props: {
         reviews: {
@@ -223,14 +255,13 @@ Vue.component("product-tabs", {
             </span>
 
             <div v-show="selectedTab === 'Reviews'">
-            <p v-if="!reviews.length">There are no reviews yet</p>
-            <ul v-for="review in reviews">
-                <li>{{ review.name }}</li>
-                <li>Review: {{ review.review }}</li>
-                <li>Rating: {{ review.rating }}</li>
-            </ul>
-        </div v-show="selectedTab === 'Make a Review'">
-        <product-review></product-review>  
+                <p v-if="!reviews.length">There are no reviews yet</p>
+                <ul v-for="review in reviews">
+                    <li>{{ review.name }}</li>
+                    <li>Review: {{ review.review }}</li>
+                    <li>Rating: {{ review.rating }}</li>
+                </ul>
+            </div>
         </div>
 
 
@@ -246,7 +277,7 @@ Vue.component("product-tabs", {
 var app = new Vue({
     el: "#app",
     data: {
-        premium: false,
+        premium: true,
         cart: []
     },
     methods: {
